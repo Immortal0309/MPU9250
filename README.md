@@ -1,2 +1,24 @@
-# MPU9250
-该仓库仅上传MPU9250代码
+# 原理讲解
+[MPU9250姿态解析](https://imuncle.github.io/content.html?id=39)
+
+# 注意事项
+代码中使用的是STM32的**硬件I2C2**，如果你使用的I2C方式不一样，请注意修改。
+
+# 函数接口
+function_name|brief
+:--:|:--:
+MPU6500_Init|MPU6500初始化
+GetImuData|获取IMU的陀螺仪数据和加速度数据
+imuUpdate|IMU姿态解析函数，使用AHRS融合算法
+
+# 调用示例
+```c
+MPU6500_Init();
+while(1)
+{
+    GetImuData();
+    imuUpdate(mpu9250.acc, mpu9250.gyro, mpu9250.mag);
+    Debug(huart1, "x = %f	 y = %f  z = %f\r\n", mpu9250.attitude.x, mpu9250.attitude.y, mpu9250.attitude.z);
+    rt_thread_mdelay(6);
+}
+```
